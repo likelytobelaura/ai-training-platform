@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Stationhouse — AI Training Platform</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">◆</span>
+    <span class="brand-name">STATIONHOUSE</span>
+  </div>
+
+  <nav class="nav">
+    <div class="dropdown" id="projects-dropdown">
+      <button class="dropdown-btn" id="projects-btn" aria-haspopup="true" aria-expanded="false">
+        Projects <span class="chevron">▾</span>
+      </button>
+      <div class="dropdown-menu" id="projects-menu"></div>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- Landing / model roster view -->
+  <section id="view-home" class="view">
+    <div class="hero">
+      <h1>Stationhouse</h1>
+      <p class="tagline">A mock training-operations console modeled on how an open frontier-model
+        lab tracks its runs — from first ablation to hero run. Not affiliated with or endorsed by
+        any real lab. All issue content below is read from the public, open-source
+        <a href="https://github.com/marin-community/marin" target="_blank" rel="noopener">marin-community/marin</a>
+        repository for realism.</p>
+    </div>
+
+    <h2 class="section-label">Model Roster</h2>
+    <div class="model-grid" id="model-grid"></div>
+  </section>
+
+  <!-- Pipeline / kanban view for the 535B run -->
+  <section id="view-pipeline" class="view hidden">
+    <button class="back-link" id="back-btn">&larr; Back to roster</button>
+
+    <div class="pipeline-header">
+      <h1 id="pipeline-title">Marin 535B-A23B</h1>
+      <p class="pipeline-sub" id="pipeline-sub"></p>
+      <div class="stat-row" id="pipeline-stats"></div>
+    </div>
+
+    <div class="board" id="board"></div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Stationhouse is a mock/demo project. Model and pipeline data are illustrative and sourced
+     from public open issues at <a href="https://github.com/marin-community/marin" target="_blank" rel="noopener">marin-community/marin</a>
+     for realism only.</p>
+</footer>
+
+<script src="issues-data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
