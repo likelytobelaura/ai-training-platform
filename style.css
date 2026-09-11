@@ -215,6 +215,30 @@ main { max-width: 1180px; margin: 0 auto; padding: 32px 28px 64px; }
 .tag.bug { color: #ff8a8a; border-color: #4a2323; }
 .tag.epic { color: #c9a6ff; border-color: #3a2a52; }
 .tag.p1 { color: var(--accent); border-color: var(--accent-dim); }
+.tag.discord { color: #8ea6ff; border-color: #2c3766; }
+
+.lane-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+  margin: 14px 0 8px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+}
+.lane-label:first-of-type { border-top: none; padding-top: 0; margin-top: 4px; }
+.lane-label .col-count { text-transform: none; letter-spacing: normal; }
+.lane-discord { color: #8ea6ff; }
+
+.card-discord { border-left: 2px solid #2c3766; }
+.card-excerpt {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin: 4px 0 0;
+}
 
 footer {
   border-top: 1px solid var(--border);

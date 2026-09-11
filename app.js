@@ -57,9 +57,9 @@ const PIPELINE = {
       { label: "Hardware", value: "GB200 NVL72" },
     ],
     columns: [
-      { key: "infra", label: "Infrastructure", sub: "Cluster, scheduling, training & serving infra open issues", data: window.__DATA_INFRA__ },
-      { key: "data", label: "Data", sub: "Data curation, datakit, and dataset pipeline open issues", data: window.__DATA_DATA__ },
-      { key: "evals", label: "Evals", sub: "Marin evals wishlist — open eval requests & leaderboard work", data: window.__DATA_EVALS__ },
+      { key: "infra", label: "Infrastructure", sub: "Cluster, scheduling, training & serving infra open issues", data: window.__DATA_INFRA__, discord: window.__DISCORD_INFRA__ },
+      { key: "data", label: "Data", sub: "Data curation, datakit, and dataset pipeline open issues", data: window.__DATA_DATA__, discord: window.__DISCORD_DATA__ },
+      { key: "evals", label: "Evals", sub: "Marin evals wishlist — open eval requests & leaderboard work", data: window.__DATA_EVALS__, discord: window.__DISCORD_EVALS__ },
     ],
   },
 };
@@ -128,6 +128,22 @@ function renderCard(issue) {
   return a;
 }
 
+function renderDiscordCard(task) {
+  // No outbound link and no author attribution here, by design: this lane surfaces
+  // asks raised in Marin's members-only Discord, and that community is a different
+  // privacy posture than the public GitHub issues in the lane above. Titles/excerpts
+  // are paraphrased task summaries, not direct quotes.
+  const div = document.createElement("div");
+  div.className = "card card-discord";
+  div.innerHTML = `
+    <div class="card-top"><span>#${task.channel || "discord"}</span><span>${task.date}</span></div>
+    <div class="card-title">${task.title}</div>
+    <p class="card-excerpt">${task.excerpt}</p>
+    <div class="card-labels"><span class="tag discord">internal Discord</span></div>
+  `;
+  return div;
+}
+
 function openPipeline(modelId) {
   const p = PIPELINE[modelId];
   if (!p) return;
@@ -149,11 +165,27 @@ function openPipeline(modelId) {
     const colEl = document.createElement("div");
     colEl.className = "col";
     colEl.dataset.col = col.key;
+    const discordItems = col.discord || [];
     colEl.innerHTML = `
       <div class="col-head"><h3>${col.label}</h3><span class="col-count">${col.data.length} open</span></div>
       <p class="col-sub">${col.sub}</p>
+      <div class="lane-label">GitHub</div>
     `;
     col.data.forEach((issue) => colEl.appendChild(renderCard(issue)));
+
+    const discordLabel = document.createElement("div");
+    discordLabel.className = "lane-label lane-discord";
+    discordLabel.innerHTML = `Discord <span class="col-count">last 7 days · ${discordItems.length}</span>`;
+    colEl.appendChild(discordLabel);
+    if (discordItems.length === 0) {
+      const empty = document.createElement("p");
+      empty.className = "col-sub";
+      empty.textContent = "No open asks surfaced this week.";
+      colEl.appendChild(empty);
+    } else {
+      discordItems.forEach((task) => colEl.appendChild(renderDiscordCard(task)));
+    }
+
     board.appendChild(colEl);
   });
 
